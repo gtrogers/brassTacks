@@ -1,0 +1,3 @@
+To do:
+- Add some tests
+- Check cross browser support
