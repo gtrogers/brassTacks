@@ -1,0 +1,11 @@
+_I_.value(200).item()
+
+some value is 10.4 items!
+
+Q) Bags of sugar cost £2. How many bags of sugar in £100.
+A) 50
+	100 / 2 = 50
+	
+valueOf
+
+_T_("someDiv").show(100).as("bag of sugar").value(2).image("sugar.jpg").go();
