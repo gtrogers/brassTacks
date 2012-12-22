@@ -1,7 +1,7 @@
 var _T_ = function () {
     var scoped = {};
     
-    scoped.division = function (valueToVis, valueOfItem) {
+    division = function (valueToVis, valueOfItem) {
         var nearestInt = parseInt(valueToVis / valueOfItem);
         return {
             nearestInt: nearestInt,
@@ -9,65 +9,53 @@ var _T_ = function () {
         };
     }
     
-    scoped.makeContainer = function (id) {
-        function Container(id) {
-            this.valueToVis = undefined;
-            this.valueOfItem = undefined;
-            this.optionalName = " ";
-            this.imageUrl = undefined;
-            this.element = function () { return document.getElementById(id); }();
-        };
-        
-        Container.prototype.show = function (valueToVis) {
-            this.valueToVis = valueToVis;
-            return this;
-        };
-        
-        Container.prototype.as = function (name) {
-            if (name) this.optionalName = name;
-            return this;
-        };
-        
-        Container.prototype.value = function (valueOfItem) {
-            this.valueOfItem = valueOfItem;
-            return this;
-        };
-        
-        Container.prototype.image = function (imageUrl) {
-            this.imageUrl = imageUrl;
-            return this;
-        };
-        
-        Container.prototype.buildElement = function () {
-            var newElement = document.createElement("li");
-            newElement.setAttribute("class", "_bt-item");
-            newElement.setAttribute("alt", this.optionalName);
-            newElement.setAttribute("title", this.optionalName);
-            newElement.setAttribute("style", "background-image:url(" + this.imageUrl + ")");
-            return newElement;
-        };
-        
-        Container.prototype.go = function () {
-            var visData = scoped.division(this.valueToVis, this.valueOfItem),
-                size = (visData.nearestInt > 5) ? (visData.nearestInt >= 20) ? "small" : "medium" : "large";
-            
-                this.element.setAttribute("class","_bt-ul" + " _bt-" + size);
-            
+    var build = function (infographic) {
+        var visData = division(infographic.value, infographic.item.value),
+            size = (visData.nearestInt > 5) ? (visData.nearestInt >= 20) ? "small" : "medium" : "large";
+            infographic.container.setAttribute("class","_bt-ul" + " _bt-" + size);
             for (var i=0; i<visData.nearestInt; i++) {
-                this.element.appendChild(this.buildElement());
+                infographic.container.appendChild(infographic.element());
             }
             
             if (visData.remainder > 0) {
-                var lastElement = this.buildElement();
-                this.element.appendChild(lastElement);
+                var lastElement = infographic.element();
+                infographic.container.appendChild(lastElement);
                 lastElement.style.width = (lastElement.offsetWidth * visData.remainder) + "px"
             }
-        };
-        
-        return new Container(id);
     };
     
-    return function (id) {
-        return scoped.makeContainer(id);
+    var Infographic = function(valueToVis) {
+        this.value = valueToVis;
+        this.item = undefined;
+        this.container = undefined;
+    };
+
+    Infographic.prototype.as = function(item) {
+        this.item = item
+        return this;
+    };
+    
+    Infographic.prototype.in = function(id) {
+        this.container = document.getElementById(id);
+        build(this);
+    };
+    
+    Infographic.prototype.element = function() {
+        var element = document.createElement("li");
+        element.setAttribute("class", "_bt-item");
+        if (this.item.name) {
+            element.setAttribute("alt", this.item.name);
+            element.setAttribute("title", this.item.name);
+        }
+        element.setAttribute("style", "background-image:url(" + this.item.image + ")");
+        return element;
+    }
+    
+    scoped.makeInfographic = function (valueToVis) {
+        return new Infographic(valueToVis);
+    };
+    
+    return{ 
+        show: function (value) { return scoped.makeInfographic(value); }
     };
 }();
