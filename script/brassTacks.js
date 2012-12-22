@@ -58,10 +58,9 @@ var _T_ = function () {
             }
             
             if (visData.remainder > 0) {
-                var lastElement = this.buildElement(), sizeFactor = Math.pow(visData.remainder,0.5);
+                var lastElement = this.buildElement();
                 this.element.appendChild(lastElement);
-                lastElement.style.width = (lastElement.offsetWidth * sizeFactor) + "px"
-                lastElement.style.height = (lastElement.offsetHeight * sizeFactor) + "px";
+                lastElement.style.width = (lastElement.offsetWidth * visData.remainder) + "px"
             }
         };
         
