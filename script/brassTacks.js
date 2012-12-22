@@ -49,7 +49,7 @@ var _T_ = function () {
         
         Container.prototype.go = function () {
             var visData = scoped.division(this.valueToVis, this.valueOfItem),
-                size = (visData.nearestInt > 5) ? (visData.nearestInt > 20) ? "small" : "medium" : "large";
+                size = (visData.nearestInt > 5) ? (visData.nearestInt >= 20) ? "small" : "medium" : "large";
             
                 this.element.setAttribute("class","_bt-ul" + " _bt-" + size);
             
