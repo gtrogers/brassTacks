@@ -1,3 +1,3 @@
 To do:
-- Add some tests
-- Check cross browser support
+- Add some way to access division result so you don't have to type it.
+- Check cross browser support.

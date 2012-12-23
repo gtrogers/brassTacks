@@ -15,11 +15,7 @@ _T_
 To create an infographic select a UL element and provide some information:
 
 ```javascript
-_T_("my-ul-id").show(numberIWantToVisualise)
-	.as("optional title")
-	.value(valueOfReferenceItem)
-	.image("urlToImage")
-	.go();
+_T_.show(aValue).as({value: valuePerItem, name: "name of item", image: "image.url"}).in("ul-id");
 ```
 
 That's it for now. Enjoy.
